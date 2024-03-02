@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import {Switch} from 'antd';
-import LightIcon from '@/assets/icons/light.svg';
-import DarkIcon from '@/assets/icons/dark.svg';
+import LightIcon from '@/assets/icons/light.svg?react';
+import DarkIcon from '@/assets/icons/dark.svg?react';
 import {Theme, useThemeStore} from '@/store/theme';
 import {useSelector} from '@/utils';
 
@@ -11,6 +11,7 @@ const Wrapper = styled.div`
   font-size: 16px;
   cursor: pointer;
 `;
+
 
 export const ThemeSwitcher = () => {
   const {theme, setTheme} = useThemeStore(useSelector(['theme', 'setTheme']));

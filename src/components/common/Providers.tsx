@@ -12,12 +12,12 @@ import enGB from 'antd/lib/locale/en_GB';
 
 import arWords from '@/assets/translates/ar.json';
 import arEG from 'antd/lib/locale/ar_EG';
-import {HashRouter} from 'react-router-dom';
 import { OnErrorFn } from '@formatjs/intl/src/types';
 import { IntlErrorCode } from '@formatjs/intl/src/error';
 import {Theme, useThemeStore} from '@/store/theme';
 import {StyleProvider} from '@ant-design/cssinjs';
 import {MessageFormatElement} from '@formatjs/icu-messageformat-parser';
+import {Router} from "@/Router";
 
 const vocabulary: Record<Locale, Record<string, string> | Record<string, MessageFormatElement[]>> = {
   // @ts-ignore
@@ -71,9 +71,7 @@ export const Providers: React.FC<Props> = ({ children }: React.PropsWithChildren
               }}
             >
               <IntlProvider locale={locale} messages={vocabulary[locale]} onError={errorHandler}>
-                <HashRouter>
-                  {children}
-                </HashRouter>
+                {children}
               </IntlProvider>
             </ConfigProvider>
           </StyleProvider>

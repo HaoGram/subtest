@@ -106,7 +106,7 @@ export function useSelector<S extends object, P extends keyof S>(
 }
 
 export function useDeepSelector<S extends object, P extends keyof S>(paths: string | string[]): (state: S) => Pick<S, P> {
-  warn('useDeepSelector: This is experimental function!!!!!!!!!!!!!');
+  // warn('useDeepSelector: This is experimental function!!!!!!!!!!!!!');
   const prev = useRef<Pick<S, P>>({} as Pick<S, P>);
 
   return (state: S) => {

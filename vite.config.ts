@@ -5,6 +5,7 @@ import svgr from 'vite-plugin-svgr';
 import {viteStaticCopy} from 'vite-plugin-static-copy';
 import { obfuscator } from 'rollup-obfuscator';
 import Options from '@vitejs/plugin-react';
+import {resolve} from "path";
 
 const splitToChunks = true;
 
@@ -56,7 +57,13 @@ export default ({mode}) => {
   }
 
   const cnf = {
-    plugins
+    plugins,
+    // resolve: {
+    //   alias: {
+    //     '@': resolve(__dirname, 'src'),
+    //     '~@': resolve(__dirname, 'src'),
+    //   },
+    // },
   }
 
   if (splitToChunks) {

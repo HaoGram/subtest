@@ -62,22 +62,7 @@ export const LayoutWrapper: React.FC<Props> = ({children}: PropsWithChildren<Pro
         <ThemeSwitcher/>
         <Menu mode="horizontal" defaultSelectedKeys={['1']} items={items1} theme='dark' />
       </Header>
-      <Content style={{ padding: '0 50px' }}>
-        <Breadcrumb
-          style={{margin: '16px 0'}}
-          items={[
-            {
-              title: <T z="Home"/>
-            },
-            {
-              title: <T z="List"/>
-            },
-            {
-              title: <T z="App"/>
-            }
-          ]}
-        />
-        <Layout className="site-layout-background" style={{ padding: '24px 0' }}>
+        <Layout className="site-layout-background">
           <Sider className="site-layout-background" width={200}>
             <Menu
               mode="inline"
@@ -87,11 +72,27 @@ export const LayoutWrapper: React.FC<Props> = ({children}: PropsWithChildren<Pro
               items={items2}
             />
           </Sider>
-          <Content style={{ padding: '0 24px', minHeight: 280 }}>
-            {children}
-          </Content>
+            <Layout style={{ padding: '0 24px 24px' }}>
+                <Breadcrumb
+                    style={{margin: '16px 0'}}
+                    items={[
+                        {
+                            title: <T z="Home"/>
+                        },
+                        {
+                            title: <T z="List"/>
+                        },
+                        {
+                            title: <T z="App"/>
+                        }
+                    ]}
+                />
+                <Content style={{ padding: '0 24px', minHeight: 280 }}>
+                    {children}
+                </Content>
+            </Layout>
+
         </Layout>
-      </Content>
       <Footer style={{ textAlign: 'center' }}>Ant Design ©2018 Created by Ant UED</Footer>
     </Layout>
   )
