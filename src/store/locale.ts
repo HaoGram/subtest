@@ -4,7 +4,8 @@ import {StateCreator} from 'zustand';
 
 export enum Locale {
   EN = 'en',
-  AR = 'ar'
+  AR = 'ar',
+  ZH = 'zh',
 }
 
 const defaultLocale = Locale.EN;

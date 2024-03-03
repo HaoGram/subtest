@@ -1,34 +1,35 @@
 import React, { useCallback, useEffect } from 'react';
 import { IntlProvider, MissingTranslationError } from 'react-intl';
 import { log } from '@/utils';
-import { ConfigProvider, theme } from 'antd';
+import { ConfigProvider } from '@douyinfe/semi-ui';
+
 import {StyleSheetManager, ThemeProvider} from 'styled-components';
 import rtlPlugin from "stylis-plugin-rtl";
 import { Locale, RTLLocales, useLocaleStore } from '@/store/locale';
 import { GlobalStyle } from './GlobalStyles';
 
 import enWords from '@/assets/translates/en.json';
-import enGB from 'antd/lib/locale/en_GB';
+import zh_CN from '@douyinfe/semi-ui/lib/es/locale/source/zh_CN';
+import en_GB from '@douyinfe/semi-ui/lib/es/locale/source/en_GB';
 
 import arWords from '@/assets/translates/ar.json';
-import arEG from 'antd/lib/locale/ar_EG';
 import { OnErrorFn } from '@formatjs/intl/src/types';
 import { IntlErrorCode } from '@formatjs/intl/src/error';
 import {Theme, useThemeStore} from '@/store/theme';
-import {StyleProvider} from '@ant-design/cssinjs';
 import {MessageFormatElement} from '@formatjs/icu-messageformat-parser';
-import {Router} from "@/Router";
+import {Locale as SemiLocale} from "@douyinfe/semi-ui/lib/es/locale/interface";
+
 
 const vocabulary: Record<Locale, Record<string, string> | Record<string, MessageFormatElement[]>> = {
   // @ts-ignore
   [Locale.EN]: enWords,
   // @ts-ignore
-  [Locale.AR]: arWords
+  [Locale.ZH]: arWords
 };
 
-const antVocabulary = {
-  [Locale.EN]: enGB,
-  [Locale.AR]: arEG
+const semiVocabulary: any = {
+  [Locale.EN]: en_GB,
+  [Locale.ZH]: zh_CN
 }
 
 const direction = (locale: Locale) => RTLLocales.includes(locale) ? 'rtl' : 'ltr';
@@ -54,6 +55,15 @@ export const Providers: React.FC<Props> = ({ children }: React.PropsWithChildren
     document.documentElement.dir = direction(locale);
   }, [locale]);
 
+  useEffect(() => {
+    console.log('currentTheme', currentTheme)
+    if (currentTheme === Theme.Dark) {
+      document.body.setAttribute('theme-mode', 'dark');
+    } else if (document.body.hasAttribute('theme-mode')) {
+      document.body.removeAttribute('theme-mode');
+    }
+  }, [currentTheme])
+
   return (
     <StyleSheetManager
       {...(direction(locale) === 'rtl' ? { stylisPlugins: [rtlPlugin] } : {})}
@@ -61,25 +71,14 @@ export const Providers: React.FC<Props> = ({ children }: React.PropsWithChildren
       <ThemeProvider theme={{currentTheme}}>
         <>
           <GlobalStyle />
-          <StyleProvider hashPriority={'high'}>
             <ConfigProvider
-              locale={antVocabulary[locale]}
+              locale={semiVocabulary[locale]}
               direction={direction(locale)}
-              theme={{
-                algorithm: currentTheme === Theme.Dark ? theme.darkAlgorithm : theme.defaultAlgorithm,
-                hashed: false,
-                components: {
-                  Layout: {
-                    headerBg: 'linear-gradient(120deg, #e0c3fc 0%, #8ec5fc 100%)'
-                  },
-                },
-              }}
             >
               <IntlProvider locale={locale} messages={vocabulary[locale]} onError={errorHandler}>
                 {children}
               </IntlProvider>
             </ConfigProvider>
-          </StyleProvider>
         </>
       </ThemeProvider>
     </StyleSheetManager>

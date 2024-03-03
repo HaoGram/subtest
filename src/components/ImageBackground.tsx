@@ -1,6 +1,11 @@
 import React, {useEffect, useRef, useState} from "react";
 import styled from "styled-components";
 import ColorThief from 'colorthief';
+import {Typography} from "@douyinfe/semi-ui";
+
+
+const {Title} = Typography;
+
 interface Props {
 }
 
@@ -37,7 +42,7 @@ const ImgContainer = styled.div`
 const imageList = new Array(9).fill(0).map((_, index) => {
   return {
     id: index,
-    url: `https://picsum.photos/400/300?random=${index}`,
+    url: `https://picsum.photos/150/100?random=${index}`,
   }
 })
 export const ImageBackground: React.FC<Props> = (props) => {
@@ -63,7 +68,8 @@ export const ImageBackground: React.FC<Props> = (props) => {
   }, [])
   return (
     <Wrapper {...restProps}>
-      <h1 style={{textAlign: 'center'}}>Image palette</h1>
+      <Title style={{textAlign: 'center'}} heading={2}>Image Background</Title>
+
 
       <ImgContainer style={{background: `linear-gradient(${imgColorArray.current[imageIndex]?.join(',')})`}}>
         {

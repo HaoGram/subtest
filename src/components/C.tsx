@@ -1,6 +1,6 @@
 import React, {CSSProperties} from 'react';
 import {useTestStore} from '@/store/test';
-import {Typography} from 'antd';
+import {Typography} from '@douyinfe/semi-ui';
 
 const {Text} = Typography;
 

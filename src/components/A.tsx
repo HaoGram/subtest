@@ -1,9 +1,9 @@
 import {useEffect} from 'react';
 import {T} from '@/components/common/Translate';
 import {useTestStore} from '@/store/test';
-import {Button, Typography} from 'antd';
+import { Button, Typography } from '@douyinfe/semi-ui';
 import {log, useSelector} from '@/utils';
-import {FieldTimeOutlined} from '@ant-design/icons';
+import {IconClock} from '@douyinfe/semi-icons';
 import styled, {css} from 'styled-components';
 import {Theme} from '@/store/theme';
 
@@ -13,7 +13,7 @@ const Wrapper = styled.div`
   &::before {
     display: block;
   }
-  
+
   ${({theme: {currentTheme}}) => {
     if (currentTheme === Theme.Dark) {
       return css`
@@ -60,7 +60,7 @@ export const A = () => {
       <CustomButton onClick={addA}>+</CustomButton>
       <CustomButton onClick={removeA}>-</CustomButton>
       <CustomButton onClick={() => addAWithDelay(3000)}>
-        <FieldTimeOutlined/>
+        <IconClock />
       </CustomButton>
     </Wrapper>
   );

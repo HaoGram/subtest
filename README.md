@@ -1,5 +1,8 @@
-# Fireballs React
+# Fireballs
 
+
+# Html
+ public/project 下的目录名 必须为下划线连接，如 `horizontal_scroll`
 # Repos
  - [List of all repos]
 
@@ -26,7 +29,7 @@ This template provides a setup to get React working in Vite with HMR and some ES
 Also contain:
 - [Zustand](https://github.com/pmndrs/zustand)
 - [StyledComponents](https://styled-components.com/)
-- [AntD](https://ant.design/)
+- [Semi](https://semi.design/)
 - [I18n](https://formatjs.io/docs/getting-started/installation)
 - [MapLibre GL JS](https://maplibre.org/maplibre-gl-js/docs/)
 - [React Router DOM](https://reactrouter.com/en/main)

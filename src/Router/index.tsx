@@ -3,6 +3,7 @@ import {Page1} from '@/Pages/Page1';
 import {Page2} from '@/Pages/Page2';
 import {Examples} from "@/Pages/Examples";
 import {App} from "@/App";
+import {HtmlFrame} from "@/components/HtmlFrame";
 
 
 export const routers = createHashRouter([
@@ -25,6 +26,10 @@ export const routers = createHashRouter([
       {
         path: "/Examples",
         element: <Examples/>
+      },
+      {
+        path: "/frame/:dirName",
+        element: <HtmlFrame/>
       }
     ]
   },

@@ -1,9 +1,9 @@
 import styled from 'styled-components';
-import {Switch} from 'antd';
-import LightIcon from '@/assets/icons/light.svg?react';
-import DarkIcon from '@/assets/icons/dark.svg?react';
+import {Button, Switch} from '@douyinfe/semi-ui';
+
 import {Theme, useThemeStore} from '@/store/theme';
 import {useSelector} from '@/utils';
+import {IconMoon, IconSun} from '@douyinfe/semi-icons';
 
 const Wrapper = styled.div`
   float: right;
@@ -16,18 +16,19 @@ const Wrapper = styled.div`
 export const ThemeSwitcher = () => {
   const {theme, setTheme} = useThemeStore(useSelector(['theme', 'setTheme']));
 
-  const changeHandler = (dark: boolean) => {
-    setTheme(dark ? Theme.Dark : Theme.Light);
+  const changeHandler = () => {
+    setTheme(theme === Theme.Light ? Theme.Dark : Theme.Light);
   };
 
   return (
     <Wrapper>
-      <Switch
-        checkedChildren={<LightIcon/>}
-        unCheckedChildren={<DarkIcon/>}
-        checked={theme === Theme.Dark}
-        onChange={changeHandler}
-      />
+      <Button
+        style={{color: 'var(--semi-color-text-2)'}}
+        theme='borderless'
+        onClick={changeHandler}
+        icon={theme === Theme.Dark ? <IconMoon /> : <IconSun />}
+      >
+      </Button>
     </Wrapper>
   );
 };

@@ -1,6 +1,6 @@
 import {T} from '@/components/common/Translate';
 import {useTestStore} from '@/store/test';
-import {Button, Typography} from 'antd';
+import {Button, Typography} from '@douyinfe/semi-ui';
 import {useSelector} from '@/utils';
 
 const {Text} = Typography;
