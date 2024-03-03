@@ -10,7 +10,7 @@ import {ThemeSwitcher} from '@/components/common/ThemeSwitcher';
 import logo from "@/assets/icons/logo.png"
 const { Header, Content, Footer, Sider } = Layout;
 
-const items1: MenuProps['items'] = [
+const hearMenus: MenuProps['items'] = [
   {
     key: 'Example',
     label: (
@@ -74,7 +74,7 @@ export const LayoutWrapper: React.FC<Props> = ({children}: PropsWithChildren<Pro
         <Logo src={logo} alt=""/>
         {/*<LanguageSwitcher/>*/}
         <ThemeSwitcher/>
-        <Menu mode="horizontal" defaultSelectedKeys={['1']} items={items1} style={{background: 'transparent'}} />
+        <Menu mode="horizontal" defaultSelectedKeys={[hearMenus[0].key]} items={hearMenus} style={{background: 'transparent'}} />
       </Header>
         <Layout className="site-layout-background">
 

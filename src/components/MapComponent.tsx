@@ -63,7 +63,7 @@ export const MapComponent: React.FC<Props> = (option: Props) => {
         destructor();
       }
       map.current?.remove();
-      map.current = null;
+      map.current = undefined;
     };
   }, [callback]);
 

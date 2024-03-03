@@ -35,6 +35,7 @@ export const useMapStore = applyMiddleware<MapStore>(store, [
   persistMiddlewareCreator({
     name: 'map',
     syncDynamically: true,
+    // @ts-ignore
     partialize: ({style, projection}) => ({style, projection})
   }) as Middleware<MapStore>,
   mapMiddleware

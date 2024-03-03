@@ -29,11 +29,11 @@ export const calculateMapStyle = (): Style => {
     case MapStyles.Vector:
       switch (theme) {
         case Theme.Dark:
-          resultTheme = darkMapStyle;
+          resultTheme = darkMapStyle as Style;
           break;
         default:
         case Theme.Light:
-          resultTheme = lightMapStyle;
+          resultTheme = lightMapStyle as Style;
           break;
       }
       break;
@@ -45,7 +45,7 @@ export const calculateMapStyle = (): Style => {
   if (resultTheme.sprite) {
     resultTheme.sprite = resultTheme.sprite.replaceAll('__REPLACE_ME__', path);
   }
-  return resultTheme;
+  return resultTheme as Style;
 };
 
 export const changeMapStyle = () => {

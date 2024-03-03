@@ -31,6 +31,6 @@ export const routers = createHashRouter([
 
 ]);
 
-export const Router = ({children}) => (
-  <RouterProvider router={routers} >{children}</RouterProvider>
+export const Router = () => (
+  <RouterProvider router={routers} ></RouterProvider>
 );

@@ -43,17 +43,17 @@ const imageList = new Array(9).fill(0).map((_, index) => {
 export const ImageBackground: React.FC<Props> = (props) => {
   const {...restProps} = props;
 
-  const [imageIndex, setImageIndex] = useState<number>()
-  const imgColorArray = useRef([])
+  const [imageIndex, setImageIndex] = useState<number>(-1)
+  const imgColorArray = useRef<any[]>([])
 
 
-  const onLoad = async (e, index: number) => {
+  const onLoad = async (e: any, index: number) => {
     const colorThief = new ColorThief()
     const color = await colorThief.getPalette(e.target, 2)
     const curColorArr = color.map(c => `rgb(${c.join(',')})`)
 
     imgColorArray.current[index] = curColorArr
-    if (imageIndex === undefined && index === 0) {
+    if (index === 0) {
       setImageIndex(index)
     }
   }
