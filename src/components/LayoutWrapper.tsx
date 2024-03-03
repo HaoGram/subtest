@@ -18,13 +18,13 @@ const hearMenus: MenuProps['items'] = [
     ),
   },
   {
-    key: 1,
+    key: '1',
     label: (
       <Link to={`/Page1`}>{`nav 1`}</Link>
     ),
   },
   {
-    key: 2,
+    key: '2',
     label: (
       <Link to={`/Page2`}>{`nav 2`}</Link>
     ),
@@ -74,7 +74,7 @@ export const LayoutWrapper: React.FC<Props> = ({children}: PropsWithChildren<Pro
         <Logo src={logo} alt=""/>
         {/*<LanguageSwitcher/>*/}
         <ThemeSwitcher/>
-        <Menu mode="horizontal" defaultSelectedKeys={[hearMenus[0].key]} items={hearMenus} style={{background: 'transparent'}} />
+        <Menu mode="horizontal" defaultSelectedKeys={[String(hearMenus[0]?.key)]} items={hearMenus} style={{background: 'transparent'}} />
       </Header>
         <Layout className="site-layout-background">
 
