@@ -7,20 +7,34 @@ import styled from 'styled-components';
 import {useIntl} from 'react-intl';
 import {Link} from 'react-router-dom';
 import {ThemeSwitcher} from '@/components/common/ThemeSwitcher';
-
+import logo from "@/assets/icons/logo.png"
 const { Header, Content, Footer, Sider } = Layout;
 
-const items1: MenuProps['items'] = ['1', '2'].map(key => ({
-  key,
-  label: (
-    <Link to={`/Page${key}`}>{`nav ${key}`}</Link>
-  ),
-}));
+const items1: MenuProps['items'] = [
+  {
+    key: 'Example',
+    label: (
+      <Link to={`/Examples`}>Example</Link>
+    ),
+  },
+  {
+    key: 1,
+    label: (
+      <Link to={`/Page1`}>{`nav 1`}</Link>
+    ),
+  },
+  {
+    key: 2,
+    label: (
+      <Link to={`/Page2`}>{`nav 2`}</Link>
+    ),
+  },
+]
 
-const Logo = styled.div`
+const Logo = styled.img`
   float: left;
-  width: 120px;
-  height: 31px;
+  width: 30px;
+  //height: 31px;
   margin: 16px 24px 16px 0;
   background: rgba(255, 255, 255, 0.3);
 `;
@@ -57,36 +71,14 @@ export const LayoutWrapper: React.FC<Props> = ({children}: PropsWithChildren<Pro
   return (
     <Layout>
       <Header>
-        <Logo/>
-        <LanguageSwitcher/>
+        <Logo src={logo} alt=""/>
+        {/*<LanguageSwitcher/>*/}
         <ThemeSwitcher/>
-        <Menu mode="horizontal" defaultSelectedKeys={['1']} items={items1} theme='dark' />
+        <Menu mode="horizontal" defaultSelectedKeys={['1']} items={items1} style={{background: 'transparent'}} />
       </Header>
         <Layout className="site-layout-background">
-          <Sider className="site-layout-background" width={200}>
-            <Menu
-              mode="inline"
-              defaultSelectedKeys={['1']}
-              defaultOpenKeys={['sub1']}
-              style={{ height: '100%' }}
-              items={items2}
-            />
-          </Sider>
+
             <Layout style={{ padding: '0 24px 24px' }}>
-                <Breadcrumb
-                    style={{margin: '16px 0'}}
-                    items={[
-                        {
-                            title: <T z="Home"/>
-                        },
-                        {
-                            title: <T z="List"/>
-                        },
-                        {
-                            title: <T z="App"/>
-                        }
-                    ]}
-                />
                 <Content style={{ padding: '0 24px', minHeight: 280 }}>
                     {children}
                 </Content>

@@ -67,7 +67,12 @@ export const Providers: React.FC<Props> = ({ children }: React.PropsWithChildren
               direction={direction(locale)}
               theme={{
                 algorithm: currentTheme === Theme.Dark ? theme.darkAlgorithm : theme.defaultAlgorithm,
-                hashed: false
+                hashed: false,
+                components: {
+                  Layout: {
+                    headerBg: 'linear-gradient(120deg, #e0c3fc 0%, #8ec5fc 100%)'
+                  },
+                },
               }}
             >
               <IntlProvider locale={locale} messages={vocabulary[locale]} onError={errorHandler}>

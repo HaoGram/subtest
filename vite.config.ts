@@ -57,13 +57,13 @@ export default ({mode}) => {
   }
 
   const cnf = {
+    resolve: {
+      alias: {
+        '@': resolve(__dirname, 'src'),
+        '~@': resolve(__dirname, 'src'),
+      },
+    },
     plugins,
-    // resolve: {
-    //   alias: {
-    //     '@': resolve(__dirname, 'src'),
-    //     '~@': resolve(__dirname, 'src'),
-    //   },
-    // },
   }
 
   if (splitToChunks) {
