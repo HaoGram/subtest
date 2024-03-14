@@ -4,7 +4,9 @@ import {Page2} from '@/Pages/Page2';
 import {Examples} from "@/Pages/Examples";
 import {App} from "@/App";
 import {HtmlFrame} from "@/components/HtmlFrame";
-
+import {Demo_ImageBackground} from "@/components/Demo_ImageBackground.tsx";
+import {Demo_VideoFrame} from "@/components/Demo_VideoFrame.tsx";
+import {Demo_FfmpegDemo} from "@/components/Demo_FfmpegDemo.tsx";
 
 export const routers = createHashRouter([
   {
@@ -25,7 +27,22 @@ export const routers = createHashRouter([
       },
       {
         path: "/Examples",
-        element: <Examples/>
+        element: <Examples/>,
+        children: [
+
+          {
+            path: '/Examples/VideoFrame',
+            element: <Demo_VideoFrame/>
+          },
+          {
+            path: 'ImageBackground',
+            element: <Demo_ImageBackground/>
+          },
+          {
+            path: 'FfmpegDemo',
+            element: <Demo_FfmpegDemo/>
+          }
+        ]
       },
       {
         path: "/frame/:dirName",

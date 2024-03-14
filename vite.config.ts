@@ -64,6 +64,18 @@ export default ({mode}) => {
       },
     },
     plugins,
+    optimizeDeps: {
+      exclude: ["@ffmpeg/ffmpeg", "@ffmpeg/util"],
+    },
+    server: {
+      port: 5174,
+      // host: '127.0.0.1',
+      // https: true,
+      headers: {
+        "Cross-Origin-Opener-Policy": "same-origin",
+        "Cross-Origin-Embedder-Policy": "require-corp",
+      },
+    },
   }
 
   if (splitToChunks) {

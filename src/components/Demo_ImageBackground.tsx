@@ -45,7 +45,7 @@ const imageList = new Array(9).fill(0).map((_, index) => {
     url: `https://picsum.photos/150/100?random=${index}`,
   }
 })
-export const ImageBackground: React.FC<Props> = (props) => {
+export const Demo_ImageBackground: React.FC<Props> = (props) => {
   const {...restProps} = props;
 
   const [imageIndex, setImageIndex] = useState<number>(-1)

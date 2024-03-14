@@ -33,3 +33,9 @@ Also contain:
 - [I18n](https://formatjs.io/docs/getting-started/installation)
 - [MapLibre GL JS](https://maplibre.org/maplibre-gl-js/docs/)
 - [React Router DOM](https://reactrouter.com/en/main)
+
+
+# ffmpeg.wasm
+需要 js 包时，可执行 `npm run download-js-ffmpeg` 下载 ffmpeg 包到 `public/ffmpeg` 目录下使用
+
+详情可查看官方[Examples](https://ffmpegwasm.netlify.app/docs/getting-started/examples)
