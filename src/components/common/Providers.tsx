@@ -59,8 +59,10 @@ export const Providers: React.FC<Props> = ({ children }: React.PropsWithChildren
     console.log('currentTheme', currentTheme)
     if (currentTheme === Theme.Dark) {
       document.body.setAttribute('theme-mode', 'dark');
+      document.body.classList.add('dark');
     } else if (document.body.hasAttribute('theme-mode')) {
       document.body.removeAttribute('theme-mode');
+      document.body.classList.remove('dark');
     }
   }, [currentTheme])
 

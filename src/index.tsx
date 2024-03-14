@@ -1,6 +1,8 @@
-import {App} from './App.tsx';
 import {mount} from '@/utils/mount';
 import {Router} from "@/Router";
+import './style/global.css';
+
+import 'virtual:uno.css'
 
 (() => {
   const el = document.createElement('div');

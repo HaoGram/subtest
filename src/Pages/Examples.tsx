@@ -24,19 +24,23 @@ export const Examples: React.FC<React.PropsWithChildren<Props>> = (props) => {
       {
         label: 'FfmpegDemo',
         path: '/Examples/FfmpegDemo'
+      },
+      {
+        label: 'unocss',
+        path: '/Examples/unocss'
       }
     ]
   console.log('children', children)
     return (
-        <Wrapper {...restProps}>
-          <div style={{display: 'flex', gap: 15, marginBottom: 20}}>
-            {
-              menuList.map((item, i) => {
-                return <Link key={i} to={item.path}>{item.label}</Link>
-              })
-            }
-          </div>
-          <Outlet />
-        </Wrapper>
+      <Wrapper {...restProps}>
+        <div className={'flex mb-5 gap-2'}>
+          {
+            menuList.map((item, i) => {
+              return <Link key={i} to={item.path}>{item.label}</Link>
+            })
+          }
+        </div>
+        <Outlet/>
+      </Wrapper>
     );
 }

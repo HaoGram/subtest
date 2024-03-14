@@ -6,6 +6,7 @@ import {viteStaticCopy} from 'vite-plugin-static-copy';
 import { obfuscator } from 'rollup-obfuscator';
 import Options from '@vitejs/plugin-react';
 import {resolve} from "path";
+import UnoCSS from 'unocss/vite'
 
 const splitToChunks = true;
 
@@ -14,6 +15,7 @@ export default ({mode}) => {
   const isDev = mode === 'development';
 
   const plugins = [
+    UnoCSS(),
     react(
       isDev ? {
         babel: {
@@ -71,6 +73,8 @@ export default ({mode}) => {
       port: 5174,
       // host: '127.0.0.1',
       // https: true,
+
+      // this header for ffmpeg worker
       headers: {
         "Cross-Origin-Opener-Policy": "same-origin",
         "Cross-Origin-Embedder-Policy": "require-corp",

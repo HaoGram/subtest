@@ -28,11 +28,14 @@ This template provides a setup to get React working in Vite with HMR and some ES
 
 Also contain:
 - [Zustand](https://github.com/pmndrs/zustand)
-- [StyledComponents](https://styled-components.com/)
+- CSS
+  - [StyledComponents](https://styled-components.com/)
+  - [UnoCSS](https://unocss.dev/)
 - [Semi](https://semi.design/)
 - [I18n](https://formatjs.io/docs/getting-started/installation)
 - [MapLibre GL JS](https://maplibre.org/maplibre-gl-js/docs/)
 - [React Router DOM](https://reactrouter.com/en/main)
+
 
 
 # ffmpeg.wasm

@@ -7,6 +7,7 @@ import {HtmlFrame} from "@/components/HtmlFrame";
 import {Demo_ImageBackground} from "@/components/Demo_ImageBackground.tsx";
 import {Demo_VideoFrame} from "@/components/Demo_VideoFrame.tsx";
 import {Demo_FfmpegDemo} from "@/components/Demo_FfmpegDemo.tsx";
+import {Demo_UnoCSS} from "@/components/Demo_UnoCSS.tsx";
 
 export const routers = createHashRouter([
   {
@@ -41,6 +42,10 @@ export const routers = createHashRouter([
           {
             path: 'FfmpegDemo',
             element: <Demo_FfmpegDemo/>
+          },
+          {
+            path: 'unocss',
+            element: <Demo_UnoCSS />
           }
         ]
       },
