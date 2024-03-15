@@ -101,7 +101,7 @@ const captureFrame = (file: Blob, time = 0) => {
 export const sleep = (time = 100) => new Promise((resolve) => {
   setTimeout(() => resolve(null), time);
 });
-export const Demo_VideoFrame: React.FC<Props> = (props) => {
+const Demo_VideoFrame: React.FC<Props> = (props) => {
   const {...restProps} = props
 
   const [frameList, setFrameList] = useState<any[]>([])
@@ -157,3 +157,4 @@ export const Demo_VideoFrame: React.FC<Props> = (props) => {
 
   </Wrapper>;
 };
+export default Demo_VideoFrame;

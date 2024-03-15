@@ -27,5 +27,5 @@ export const useLocaleStore = applyMiddleware<Store>(store, [
     name: 'locale',
     syncDynamically: true
   }) as Middleware<Store>,
-  logMiddleware<Store>()
+  // logMiddleware<Store>()
 ]);

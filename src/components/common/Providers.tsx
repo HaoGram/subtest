@@ -56,7 +56,7 @@ export const Providers: React.FC<Props> = ({ children }: React.PropsWithChildren
   }, [locale]);
 
   useEffect(() => {
-    console.log('currentTheme', currentTheme)
+    // console.log('currentTheme', currentTheme)
     if (currentTheme === Theme.Dark) {
       document.body.setAttribute('theme-mode', 'dark');
       document.body.classList.add('dark');

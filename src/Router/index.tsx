@@ -1,14 +1,62 @@
-import {createHashRouter, Navigate, RouterProvider} from 'react-router-dom';
+import {
+  createHashRouter,
+  isRouteErrorResponse,
+  Link,
+  Navigate,
+  RouteObject,
+  RouterProvider,
+  useRouteError
+} from 'react-router-dom';
 import {Page1} from '@/Pages/Page1';
 import {Page2} from '@/Pages/Page2';
 import {Examples} from "@/Pages/Examples";
 import {App} from "@/App";
 import {HtmlFrame} from "@/components/HtmlFrame";
-import {Demo_ImageBackground} from "@/components/Demo_ImageBackground.tsx";
-import {Demo_VideoFrame} from "@/components/Demo_VideoFrame.tsx";
-import {Demo_FfmpegDemo} from "@/components/Demo_FfmpegDemo.tsx";
-import {Demo_UnoCSS} from "@/components/Demo_UnoCSS.tsx";
 
+import {lazy, ReactNode, Suspense} from "react";
+
+
+function NoMatch() {
+  return (
+    <div>
+      <h2>It looks like you're lost...</h2>
+      <p>
+        <Link to="/">Go to the home page</Link>
+      </p>
+    </div>
+  );
+}
+// 路由懒加载
+const routerLazyLoadingFn = (Element: React.LazyExoticComponent<React.ComponentType<any>>) => <Suspense fallback={<>loading...</>}>
+  <Element />
+</Suspense>
+
+
+const UElement = lazy(() => import("@/Pages/Demo_UnoCSS.tsx"))
+
+const VideoElement = lazy(() => import("@/Pages/Demo_VideoFrame.tsx"))
+
+const demoRoutes: RouteObject[] = []
+const files = import.meta.glob('../Pages/Demo_*.tsx');
+for (let i in files) {
+  // console.log(123, i, files[i]);
+  const curFile = files[i]
+  const fileName = i.replace(/..\/Pages\//, '').replace(/.tsx/, '');
+
+  // const upperName = newName.replace(/([A-Z])/g," $1").slice(1)
+  const upperName = fileName.replace('Demo_', '')
+
+  const pathName = upperName.toLocaleLowerCase()
+  console.log('curFile', typeof curFile, curFile)
+  const element = routerLazyLoadingFn(lazy(curFile as any))
+  demoRoutes.push({
+    path: '' + upperName,
+    element,
+    // name: upperName,
+  })
+}
+
+console.log('files', files, demoRoutes)
 export const routers = createHashRouter([
   {
     path: "/",
@@ -31,32 +79,30 @@ export const routers = createHashRouter([
         element: <Examples/>,
         children: [
 
-          {
-            path: '/Examples/VideoFrame',
-            element: <Demo_VideoFrame/>
-          },
-          {
-            path: 'ImageBackground',
-            element: <Demo_ImageBackground/>
-          },
-          {
-            path: 'FfmpegDemo',
-            element: <Demo_FfmpegDemo/>
-          },
-          {
-            path: 'unocss',
-            element: <Demo_UnoCSS />
-          }
+          ...demoRoutes,
+
+          // {
+          //   path: 'ImageBackground',
+          //   element: <Demo_ImageBackground/>
+          // },
+          // {
+          //   path: 'FfmpegDemo',
+          //   element: <Demo_FfmpegDemo/>
+          // },
+
         ]
       },
       {
         path: "/frame/:dirName",
         element: <HtmlFrame/>
-      }
+      },
+      { path: "*", element: <NoMatch /> },
     ]
   },
+], {
+  basename: import.meta.env.BASE_URL,
+});
 
-]);
 
 export const Router = () => (
   <RouterProvider router={routers} ></RouterProvider>

@@ -30,7 +30,6 @@ export const Examples: React.FC<React.PropsWithChildren<Props>> = (props) => {
         path: '/Examples/unocss'
       }
     ]
-  console.log('children', children)
     return (
       <Wrapper {...restProps}>
         <div className={'flex mb-5 gap-2'}>

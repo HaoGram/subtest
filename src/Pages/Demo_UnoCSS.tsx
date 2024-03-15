@@ -7,7 +7,7 @@ interface Props {
 const Wrapper = styled.div`
     font-size: 4px !important;
 `
-export const Demo_UnoCSS: React.FC<Props> = (props) => {
+const Demo_UnoCSS: React.FC<Props> = (props) => {
   const {...restProps} = props;
   return (
     <Wrapper className="px-16px py-40px text-center dark:text-white">
@@ -78,3 +78,4 @@ export const Demo_UnoCSS: React.FC<Props> = (props) => {
     </Wrapper>
   );
 }
+export default Demo_UnoCSS
