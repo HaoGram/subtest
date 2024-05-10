@@ -16,14 +16,16 @@ const Wrapper = styled.div`
 `
 const ImgContainer = styled.div`
   display: grid;
-  grid-template-columns:repeat(3,1fr);
-  grid-template-rows: repeat(3,1fr);
+  grid-template-columns:repeat(2,1fr);
+  grid-template-rows: repeat(2,1fr);
   //height: 800px;
-  width: 100%;
-  grid-gap: 30px;
+  width: 50%;
+  grid-gap: 20px;
   margin: auto;
 
-  padding: 40px;
+  padding: 20px;
+
+  background: lightblue;
 
   img {
     width: 100%;
@@ -39,7 +41,7 @@ const ImgContainer = styled.div`
   }
 `
 
-const imageList = new Array(9).fill(0).map((_, index) => {
+const imageList = new Array(4).fill(0).map((_, index) => {
   return {
     id: index,
     url: `https://picsum.photos/150/100?random=${index}`,
