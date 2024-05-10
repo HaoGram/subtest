@@ -28,6 +28,10 @@ export const Examples: React.FC<React.PropsWithChildren<Props>> = (props) => {
       {
         label: 'unocss',
         path: '/Examples/unocss'
+      },
+      {
+        label: 'Traffic light',
+        path: '/Examples/TrafficLight'
       }
     ]
     return (
