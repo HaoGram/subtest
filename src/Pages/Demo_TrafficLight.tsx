@@ -1,7 +1,7 @@
 import React, {useEffect, useRef, useState} from "react";
 import styled, {css} from "styled-components";
 import ColorThief from 'colorthief';
-import {Table, Typography} from "@douyinfe/semi-ui";
+import {Button, Form, Table, Typography} from "@douyinfe/semi-ui";
 import {useTrafficLightControl} from "@/utils/trafficLightControl.ts";
 import InlineSvg from "react-inlinesvg";
 import trafficLightIcon from "@/assets/icons/traffic-light.svg";
@@ -133,12 +133,46 @@ export const TRAFFIC_LIGHTS = [
   },
 ]
 
+const TRAFFIC_LIGHT_TIME = [
+  {
+    type: 'green',
+    time: 5,
+  },
+  {
+    type: 'yellow',
+    time: 2,
+  },
+
+  {
+    type: 'red',
+    time: 5,
+  },
+]
+
 const Demo_TrafficLight: React.FC<Props> = (props) => {
   const {...restProps} = props;
   const [data, setData] = useState(TRAFFIC_LIGHTS.map(t => ({id: t.id, lightStatus: ''})))
+  const [trafficLightsTimes, setTrafficLightsTimes] = useState([
+    {
+      id: 1,
+      time: 5,
+      type: 'red',
+    },
+    {
+      id: 2,
+      time: 2,
+      type: 'green',
+    },
+    {
+      id: 3,
+      time: 5,
+      type: 'yellow',
+    },
 
-  const {changeLight, updateAllLightsRegular, initTrafficLights} = useTrafficLightControl(TRAFFIC_LIGHTS, (p ,colorItem) => {
-    console.log('updateAllLightsRegular', p, colorItem)
+  ])
+
+  const {updateAllLightsRegular, initTrafficLights} = useTrafficLightControl(TRAFFIC_LIGHTS, (p ,colorItem) => {
+    // console.log('updateAllLightsRegular', p, colorItem)
     const newData = data?.map(t => {
       const light = p.find(d => d.id === t.id)
       if (light) {
@@ -147,33 +181,22 @@ const Demo_TrafficLight: React.FC<Props> = (props) => {
       return t
     })
 
-    console.log('newData', newData)
+    // console.log('newData', newData)
     setData(newData)
 
   })
+  const lightChange = (lId: string, value: Record<string, any>) => {
+    console.log('lightChange', lId, value)
+    const times = Object.keys(value).map(k => { return {type: k, time: value[k]}})
+    updateAllLightsRegular(lId, times)
+  }
 
   const initLights = async () => {
     await initTrafficLights()
 
-    const times = [
-      {
-        type: 'green',
-        time: 5,
-      },
-      {
-        type: 'yellow',
-        time: 2,
-      },
-
-      {
-        type: 'red',
-        time: 5,
-      },
-    ]
-
     setTimeout(() => {
 
-      updateAllLightsRegular(TRAFFIC_LIGHTS[0].id, times)
+      updateAllLightsRegular(TRAFFIC_LIGHTS[0].id, TRAFFIC_LIGHT_TIME)
 
     }, 1000)
   }
@@ -194,10 +217,41 @@ const Demo_TrafficLight: React.FC<Props> = (props) => {
     {
       title: 'Light',
       render: (text, record) => {
-        const light = record?.lightStatus
-        console.log('light', light, record)
+        const lightStatus = record?.lightStatus
         return (
-          <LightIcon width={80} height={80} className="light" src={trafficLightIcon} $lightStatus={light}></LightIcon>
+          <LightIcon width={80} height={80} className="light" src={trafficLightIcon} $lightStatus={lightStatus}></LightIcon>
+
+        );
+      },
+    },
+    {
+      title: 'Control',
+      width: 500,
+      render: (text, record) => {
+        const lightId = record?.id
+        let initValues: any = {}
+        TRAFFIC_LIGHT_TIME.forEach(t => {
+          initValues[t.type] = t.time
+        })
+        return (
+          <Form labelPosition='inset' layout='horizontal' initValues={initValues} onSubmit={(values) => lightChange(lightId, values)}>
+            {
+              ({ formState, values, formApi }) => (
+                <>
+                  <Form.Input field='green' label='Green' style={{ width: 100 }} />
+                  <Form.Input field='red' label='Red' style={{ width: 100 }} />
+                  <Form.Input field='yellow' label='Yellow' style={{ width: 100 }} />
+
+                  <div style={{display: 'flex', alignItems: 'flex-end'}}>
+                    <Button type="primary" htmlType="submit" className="btn-margin-right">
+                      Confirm
+                    </Button>
+                  </div>
+                </>
+              )
+            }
+
+          </Form>
 
         );
       },
@@ -205,13 +259,12 @@ const Demo_TrafficLight: React.FC<Props> = (props) => {
   ];
 
 
-
   return (
     <Wrapper {...restProps}>
       <Title style={{textAlign: 'center'}} heading={2}>Traffic light simulation</Title>
 
       <ImgContainer>
-        <Table columns={columns} dataSource={data} pagination={false} />
+        <Table columns={columns} dataSource={data} pagination={false}/>
       </ImgContainer>
 
     </Wrapper>

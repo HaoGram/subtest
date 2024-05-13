@@ -1,7 +1,17 @@
 
+type TrafficLightItem = {
+  id: string
+  [key: string]: any
+}
+type ColorTimeItem = {
+  type: 'red' | 'green' | 'yellow',
+  time?: number
+}
 
 const trafficLightTimer: Record<string, NodeJS.Timeout[]> = {}
-export const useTrafficLightControl = (trafficLights: ({ id: string } & Record<string, any>)[], onLightUpdate?: (...args: any[]) => void) => {
+
+// 交通灯控制
+export const useTrafficLightControl = (trafficLights: TrafficLightItem[], onLightUpdate?: (lights: TrafficLightItem[], color: ColorTimeItem) => void) => {
 
   const trafficLightsList = trafficLights
 
@@ -22,6 +32,8 @@ export const useTrafficLightControl = (trafficLights: ({ id: string } & Record<s
     })
 
   }
+
+  // 更新定时器缓存数组
   const updateLightInterval = (key: any, val: any) => {
     if (!trafficLightTimer[key]) {
       trafficLightTimer[key] = []
@@ -30,102 +42,13 @@ export const useTrafficLightControl = (trafficLights: ({ id: string } & Record<s
 
   }
 
-  const lightUpdate = (p: any, color: any) => {
+  const lightUpdate: typeof onLightUpdate = (lights, color) => {
     // console.log('lightUpdate', p, color)
 
-    onLightUpdate?.(p, color)
+    onLightUpdate?.(lights, color)
   }
 
-  const changeLight = async (lightParam: {
-    id: number,
-    type: 'red' | 'green' | 'yellow',
-    isLoop?: boolean
-  }, times = [3, 3, 1], changeType?: string) => {
-    // drawTrafficLights()
-
-    const lightId = Number(lightParam.id)
-    const isLoop = lightParam?.isLoop
-    console.log('changeLight', lightParam)
-
-    // [red, green, yellow]
-    const lightTimes = times
-    const lightColorMap: any = {
-      red: {
-        type: 'red',
-        value: '红',
-      },
-      green: {
-        type: 'green',
-        value: '绿',
-      },
-      yellow: {
-        type: 'yellow',
-        value: '黄',
-      },
-    }
-    // only red and green
-    const switchColors = [
-      {
-        type: 'red',
-        value: '红'
-      },
-      {
-        type: 'green',
-        value: '绿'
-      },
-    ]
-
-
-    const changeLightAuto = async () => {
-      clearLightInterval(lightId)
-
-      const colorItem = switchColors.find(t => t.type === lightParam?.type)
-      const colorValueIndex = switchColors.findIndex(t => t.type === lightParam.type)
-
-
-      await lightUpdate(lightParam)
-      if (!isLoop) {
-        return
-      }
-
-      const t1 = setTimeout(async () => {
-
-        lightUpdate(lightParam)
-
-        const anotherIndex = (colorValueIndex + 1) % switchColors.length
-        const anotherColorItem = switchColors[anotherIndex]
-        const t2 = setTimeout(async () => {
-
-          lightUpdate(lightParam)
-
-          if (!isLoop) return
-          const t3 = setTimeout(() => {
-
-            changeLightAuto()
-          }, lightTimes[anotherIndex] * 1000)
-          // trafficLightTimer[lightId][3] = t3
-          updateLightInterval(lightId, t3)
-
-        }, (lightTimes[2]) * 1000)
-        // trafficLightTimer[lightId][2] = t2
-        updateLightInterval(lightId, t2)
-
-
-      }, lightTimes[colorValueIndex] * 1000)
-      // trafficLightTimer[lightId][1] = t1
-      updateLightInterval(lightId, t1)
-
-
-    }
-
-    changeLightAuto()
-
-  }
-
-  const changeMultiLight = async (lightParam: { id: string | string[], isLoop?: boolean }, colorTimes: {
-    type: 'red' | 'green' | 'yellow',
-    time?: number
-  }[], changeType?: string) => {
+  const changeMultiLight = async (lightParam: { id: string | string[], isLoop?: boolean }, colorTimes: ColorTimeItem[], changeType?: string) => {
     // drawTrafficLights()
 
     const isLoop = lightParam?.isLoop
@@ -135,6 +58,7 @@ export const useTrafficLightControl = (trafficLights: ({ id: string } & Record<s
     const updateColors = colorTimes
 
     const intervalType = 'multi_' + updateLights.join('')
+
     const changeLightAuto = async () => {
       clearLightInterval(intervalType)
 
@@ -152,7 +76,10 @@ export const useTrafficLightControl = (trafficLights: ({ id: string } & Record<s
           for (const item of updateLights) {
             const lightId = item
             const curLightItem = trafficLightsList.find(t => t.id === lightId)
-            lightParamArr.push(curLightItem)
+            if (curLightItem) {
+              lightParamArr.push(curLightItem)
+
+            }
 
           }
           lightUpdate(lightParamArr, colorItem)
@@ -181,6 +108,7 @@ export const useTrafficLightControl = (trafficLights: ({ id: string } & Record<s
   }
 
   const allLightRegularTimerType = 'all-regular'
+  // 定时改变灯颜色
   const changeAllLight = (id: string, colorTimes: number[], originId?: any) => {
     const originLightId = (originId !== undefined) ? originId : id
     clearLightInterval(allLightRegularTimerType)
@@ -193,7 +121,7 @@ export const useTrafficLightControl = (trafficLights: ({ id: string } & Record<s
     const redLights = lightIdsAll.filter(t => t !== String(id))
 
 
-    console.log('greenLights', greenLights, redLights)
+    // console.log('greenLights', greenLights, redLights)
     changeMultiLight({
       id: greenLights,
       isLoop: false,
@@ -244,19 +172,18 @@ export const useTrafficLightControl = (trafficLights: ({ id: string } & Record<s
 
   }
 
-  const updateAllLightsRegular = (id: string, times: any[]) => {
-    // clearLightInterval()
-
+  const updateAllLightsRegular = (id: string, times: {type: string, time: number}[]) => {
+    console.log('updateAllLightsRegular', id, times)
     // only one light is green, other light is red
     const lightIdsAll = trafficLightsList.map(t => t.id)
 
-
     const lightTimes = times || []
 
-    const yellowTime = lightTimes.find(t => t.type === 'yellow')?.time
-    const greenTime = lightTimes.find(t => t.type === 'green')?.time
-    const redTime = lightTimes.find(t => t.type === 'red')?.time
+    const yellowTime = lightTimes.find(t => t.type === 'yellow')?.time || 0
+    const greenTime = lightTimes.find(t => t.type === 'green')?.time || 0
+    const redTime = lightTimes.find(t => t.type === 'red')?.time || 0
 
+    // 先更改所有灯颜色为黄色
     changeMultiLight({
       id: lightIdsAll,
       isLoop: false,
@@ -267,11 +194,11 @@ export const useTrafficLightControl = (trafficLights: ({ id: string } & Record<s
       },
     ])
 
+    // 清楚之前的定时器
     clearLightInterval(allLightRegularTimerType)
 
     const timer = setTimeout(() => {
       changeAllLight(id, [redTime, greenTime, yellowTime])
-
     }, 1 * 1000)
     updateLightInterval(allLightRegularTimerType, timer)
   }
@@ -293,7 +220,6 @@ export const useTrafficLightControl = (trafficLights: ({ id: string } & Record<s
   }
 
   return {
-    changeLight,
     updateAllLightsRegular,
     clearLightInterval,
     changeMultiLight,
