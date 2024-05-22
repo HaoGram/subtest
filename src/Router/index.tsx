@@ -47,7 +47,7 @@ for (let i in files) {
   const upperName = fileName.replace('Demo_', '')
 
   const pathName = upperName.toLocaleLowerCase()
-  console.log('curFile', typeof curFile, curFile)
+  // console.log('curFile', typeof curFile, curFile)
   const element = routerLazyLoadingFn(lazy(curFile as any))
   demoRoutes.push({
     path: '' + upperName,
@@ -56,7 +56,7 @@ for (let i in files) {
   })
 }
 
-console.log('files', files, demoRoutes)
+// console.log('files', files, demoRoutes)
 export const routers = createHashRouter([
   {
     path: "/",

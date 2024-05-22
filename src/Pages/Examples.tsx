@@ -32,6 +32,10 @@ export const Examples: React.FC<React.PropsWithChildren<Props>> = (props) => {
       {
         label: 'Traffic light',
         path: '/Examples/TrafficLight'
+      },
+      {
+        label: 'Slice file',
+        path: '/Examples/SliceFile'
       }
     ]
     return (
